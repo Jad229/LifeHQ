@@ -7,6 +7,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "LifeHQ - Development",
+      template: "./src/index.html", // path to my index.html file
     }),
   ],
   devtool: "inline-source-map",
