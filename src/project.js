@@ -14,6 +14,5 @@ export default class Project {
       this.todoLists.splice(index, 1); //splice at index and remove 1 element
     }
   }
-
   //Potential Feature: Progression Status of Project
 }
