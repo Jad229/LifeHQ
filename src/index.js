@@ -1,3 +1,3 @@
-import Project from "./project";
-import Todo from "./todo";
-import TodoList from "./todoList";
+import Project from "./models/project";
+import Todo from "./models/todo";
+import TodoList from "./models/todoList";
