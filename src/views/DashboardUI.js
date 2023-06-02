@@ -49,7 +49,45 @@ export default class DashboardUI {
   }
 
   openProject(project) {
-    // TODO: write openProject function that opens the clicked project
+    // TODO: finish project view
+    // Clear the projectsArea
+    while (this.projectsArea.firstChild) {
+      this.projectsArea.removeChild(this.projectsArea.firstChild);
+    }
+
+    // Create a title for the project
+    const projectTitle = document.createElement("h2");
+    projectTitle.textContent = project.getName();
+    this.projectsArea.appendChild(projectTitle);
+
+    // Create a back button to go back to the dashboard
+    const backButton = document.createElement("button");
+    backButton.textContent = "Back to Dashboard";
+    backButton.addEventListener("click", () => {
+      this.renderDashboard();
+    });
+    this.projectsArea.appendChild(backButton);
+
+    // Create a section for the TodoLists
+    const todoListsSection = document.createElement("div");
+    this.projectsArea.appendChild(todoListsSection);
+
+    // Loop through each TodoList in the project and create a card for it
+    project.collection.forEach((todoList) => {
+      const todoListCard = document.createElement("div");
+      todoListCard.classList.add("card");
+
+      // Add event listener to open the TodoList
+      todoListCard.addEventListener("click", () => {
+        this.openTodoList(todoList);
+      });
+
+      const todoListName = document.createElement("h3");
+      todoListName.textContent = todoList.getName();
+      todoListCard.appendChild(todoListName);
+
+      todoListsSection.appendChild(todoListCard);
+    });
   }
 
   openNewProjectModal() {
