@@ -2,8 +2,8 @@ import Dashboard from "./models/dashboard";
 import Project from "./models/project";
 import Todo from "./models/todo";
 import TodoList from "./models/todoList";
+import "./styles.css";
 import DashboardUI from "./views/DashboardUI";
-
 const dashboard = new Dashboard();
 const project1 = new Project();
 const project2 = new Project();

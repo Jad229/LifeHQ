@@ -1,0 +1,63 @@
+/* =============================
+=          Main Styles         =
+===============================*/
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+  background-color: #febe8c;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 5px 10px 10px #aebdca;
+}
+/* =============================
+=        Dashboard Styles      =
+===============================*/
+.dashboard-area {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+/* =============================
+=        Side Menu Styles      =
+===============================*/
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #93c6e7;
+  width: 20%;
+  height: 100%;
+}
+
+.add-project-button {
+  position: relative;
+  top: 80%;
+  width: 80%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+}
+
+/* =============================
+=    Project Section Styles    =
+===============================*/
+.project-section {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding-top: 5%;
+  width: 80%;
+}

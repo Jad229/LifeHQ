@@ -8,7 +8,11 @@ export default class DashboardUI {
     this.newProjectForm = document.getElementById("new-project-form");
     this.newProjectNameInput = document.getElementById("new-project-name");
     this.projectsArea = document.getElementById("projects");
-
+    this.backButton = document.getElementById("back-button");
+    this.backButton.addEventListener("click", () => {
+      this.backButton.classList.add("hidden");
+      this.renderDashboard();
+    });
     this.addProjectButton.addEventListener("click", () =>
       this.openNewProjectModal()
     );
@@ -50,6 +54,10 @@ export default class DashboardUI {
 
   openProject(project) {
     // TODO: finish project view
+
+    // Displays back button to go back to the dashboard
+    this.backButton.classList.remove("hidden");
+
     // Clear the projectsArea
     while (this.projectsArea.firstChild) {
       this.projectsArea.removeChild(this.projectsArea.firstChild);
@@ -59,14 +67,6 @@ export default class DashboardUI {
     const projectTitle = document.createElement("h2");
     projectTitle.textContent = project.getName();
     this.projectsArea.appendChild(projectTitle);
-
-    // Create a back button to go back to the dashboard
-    const backButton = document.createElement("button");
-    backButton.textContent = "Back to Dashboard";
-    backButton.addEventListener("click", () => {
-      this.renderDashboard();
-    });
-    this.projectsArea.appendChild(backButton);
 
     // Create a section for the TodoLists
     const todoListsSection = document.createElement("div");
