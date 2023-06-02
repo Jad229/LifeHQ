@@ -8,7 +8,9 @@ export default class DashboardUI {
     this.newProjectForm = document.getElementById("new-project-form");
     this.newProjectNameInput = document.getElementById("new-project-name");
     this.projectsArea = document.getElementById("projects");
+    this.modalWrapper = document.getElementById("modal-wrapper");
     this.backButton = document.getElementById("back-button");
+
     this.backButton.addEventListener("click", () => {
       this.backButton.classList.add("hidden");
       this.renderDashboard();
@@ -91,11 +93,11 @@ export default class DashboardUI {
   }
 
   openNewProjectModal() {
-    this.newProjectModal.style.display = "block";
+    this.modalWrapper.classList.remove("hidden");
   }
 
   closeNewProjectModal() {
-    this.newProjectModal.style.display = "none";
+    this.modalWrapper.classList.add("hidden");
   }
 
   submitNewProjectForm(e) {

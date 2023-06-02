@@ -61,3 +61,54 @@ body {
   padding-top: 5%;
   width: 80%;
 }
+/* =============================
+=          Modal Styles        =
+===============================*/
+.modal-wrapper {
+  position: fixed; /* Fixed position */
+  z-index: 1; /* Sit on top of everything else */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black with a bit of transparency */
+}
+
+.new-project-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  width: 25%;
+  height: 40%;
+  border-radius: 20px;
+  border: none;
+}
+
+#new-project-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+}
+#new-project-form > input {
+  width: 70%;
+  padding: 20px;
+  border: none;
+  border-bottom: solid 1px black;
+}
+
+#new-project-form > button {
+  width: 80%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #93c6e7;
+}
