@@ -35,6 +35,24 @@ export default class DashboardUI {
     this.dashboard.collection.forEach((project) => this.addProject(project));
   }
 
+  renderTodos(todolist) {
+    const todoItems = document.createElement("div");
+    todoItems.classList.add("todos-section");
+
+    todolist.collection.forEach((todo) => {
+      const itemContainer = document.createElement("div");
+      itemContainer.classList.add("todo-item");
+
+      const itemTitle = document.createElement("h3");
+      itemTitle.textContent = todo.title;
+      itemContainer.appendChild(itemTitle);
+
+      todoItems.appendChild(itemContainer);
+    });
+
+    return todoItems;
+  }
+
   addProject(project) {
     // First creates the card for the project
     const projectCard = document.createElement("div");
@@ -55,8 +73,6 @@ export default class DashboardUI {
   }
 
   openProject(project) {
-    // TODO: finish project view
-
     // Displays back button to go back to the dashboard
     this.backButton.classList.remove("hidden");
 
@@ -65,31 +81,38 @@ export default class DashboardUI {
       this.projectsArea.removeChild(this.projectsArea.firstChild);
     }
 
+    // Create a container for each project section
+    const projectSectionContainer = document.createElement("div");
+    projectSectionContainer.classList.add("project-section-container");
+
     // Create a title for the project
     const projectTitle = document.createElement("h2");
     projectTitle.textContent = project.getName();
-    this.projectsArea.appendChild(projectTitle);
+    projectTitle.classList.add("project-title-container");
+    projectSectionContainer.appendChild(projectTitle);
 
     // Create a section for the TodoLists
     const todoListsSection = document.createElement("div");
-    this.projectsArea.appendChild(todoListsSection);
+    todoListsSection.classList.add("todolists-container");
+    projectSectionContainer.appendChild(todoListsSection);
 
     // Loop through each TodoList in the project and create a card for it
     project.collection.forEach((todoList) => {
       const todoListCard = document.createElement("div");
       todoListCard.classList.add("card");
 
-      // Add event listener to open the TodoList
-      todoListCard.addEventListener("click", () => {
-        this.openTodoList(todoList);
-      });
-
       const todoListName = document.createElement("h3");
       todoListName.textContent = todoList.getName();
       todoListCard.appendChild(todoListName);
 
+      // Returns a div of all items of the todo
+      todoListCard.appendChild(this.renderTodos(todoList));
+
       todoListsSection.appendChild(todoListCard);
     });
+
+    // Append the project section container to the main projects area
+    this.projectsArea.appendChild(projectSectionContainer);
   }
 
   openNewProjectModal() {
