@@ -13,7 +13,7 @@ export default class Collection {
   addItem(item) {
     this.collection.push(item);
   }
-  removeList(item) {
+  removeItem(item) {
     const index = this.collection.indexOf(item);
 
     if (index != -1) {

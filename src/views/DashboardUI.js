@@ -1,4 +1,5 @@
 import Project from "../models/project";
+import Todo from "../models/todo";
 
 export default class DashboardUI {
   constructor(dashboard) {
@@ -10,6 +11,19 @@ export default class DashboardUI {
     this.projectsArea = document.getElementById("projects");
     this.modalWrapper = document.getElementById("modal-wrapper");
     this.backButton = document.getElementById("back-button");
+    this.newTodoModalWrapper =
+      document.querySelector(".new-todo-modal").parentElement;
+    this.newTodoModal = document.getElementById("new-todo-modal");
+    this.newTodoForm = document.getElementById("new-task-form");
+    this.newTodoInput = document.getElementById("new-task-input");
+
+    this.closeProjectModalButton = document.getElementById(
+      "close-project-modal-button"
+    );
+
+    this.closeProjectModalButton.addEventListener("click", () =>
+      this.closeNewProjectModal()
+    );
 
     this.backButton.addEventListener("click", () => {
       this.backButton.classList.add("hidden");
@@ -36,16 +50,42 @@ export default class DashboardUI {
   }
 
   renderTodos(todolist) {
-    const todoItems = document.createElement("div");
+    const todoItems = document.createElement("ol");
     todoItems.classList.add("todos-section");
 
-    todolist.collection.forEach((todo) => {
-      const itemContainer = document.createElement("div");
+    todolist.collection.forEach((todo, index) => {
+      const itemContainer = document.createElement("li");
       itemContainer.classList.add("todo-item");
 
-      const itemTitle = document.createElement("h3");
+      // add a unique ID to the li
+      itemContainer.id = `todo-${index}`;
+
+      const itemTitle = document.createElement("h4");
       itemTitle.textContent = todo.title;
       itemContainer.appendChild(itemTitle);
+
+      const itemStatus = document.createElement("input");
+      itemStatus.classList.add("item-status");
+      itemStatus.type = "checkbox";
+      itemStatus.addEventListener("change", () => {
+        if (itemStatus.checked) {
+          itemStatus.classList.add("checked");
+        } else {
+          itemStatus.classList.remove("checked");
+        }
+      });
+      itemContainer.appendChild(itemStatus);
+
+      //creates delete button for todo item
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => {
+        todolist.collection.splice(index, 1); // Remove the todo from the collection
+        const itemToRemove = document.getElementById(`todo-${index}`); // Get the li by its ID
+        itemToRemove.remove(); // Remove the li from the DOM
+      });
+
+      itemContainer.appendChild(deleteButton);
 
       todoItems.appendChild(itemContainer);
     });
@@ -108,11 +148,30 @@ export default class DashboardUI {
       // Returns a div of all items of the todo
       todoListCard.appendChild(this.renderTodos(todoList));
 
+      // Creates a button to add a task to the todolist
+      const newTodoButton = document.createElement("button");
+      newTodoButton.textContent = "Add Task";
+      newTodoButton.classList.add("new-task-button");
+
+      newTodoButton.addEventListener("click", (e) => {
+        this.openNewTodoModal();
+      });
+      todoListCard.appendChild(newTodoButton);
+
       todoListsSection.appendChild(todoListCard);
     });
 
     // Append the project section container to the main projects area
     this.projectsArea.appendChild(projectSectionContainer);
+  }
+
+  openNewTodoModal() {
+    this.newTodoModalWrapper.classList.remove("hidden");
+  }
+
+  // Include a method to close the new todo modal
+  closeNewTodoModal() {
+    this.newTodoModalWrapper.classList.add("hidden");
   }
 
   openNewProjectModal() {
@@ -140,5 +199,29 @@ export default class DashboardUI {
 
     // Rerender dashboard
     this.renderDashboard();
+  }
+
+  submitNewTodoForm(e, todolist, id) {
+    // Prevent the form from causing a page reload
+    e.preventDefault();
+
+    // Create new task
+    const newTodo = new Todo();
+    newTodo.setTitle(this.newTodoInput.value);
+
+    // Add the new task to the todolist
+    todolist.addItem(newTodo);
+
+    // Remove the old todoList from the DOM
+    const oldTodoList = document.getElementById(`todoList-${id}`);
+    oldTodoList.remove();
+
+    // Render the updated todoList
+    const updatedTodoList = this.renderTodos(todolist, id);
+    this.projectsArea.appendChild(updatedTodoList);
+
+    // Clear the form and hide the modal
+    this.newTodoInput.value = "";
+    this.closeNewTodoModal();
   }
 }
